@@ -1,0 +1,283 @@
+服务器路径：http://surain.viphk.ngrok.org/
+
+#####订单：
+
+#查询：
+
+	/pc/order/page   POST JSON
+	{ 
+	 	startPage : 1,
+	 	recordNum : 10,
+	 	status:0,
+	 	hotelId:1
+	}
+
+
+#查询预定订单总量/订单总金额：pc/order/book
+	输入：{ 
+		sDate : 某一天订单预定情况，不下发则查询当前时间之后所有预定,
+		hotelId : 酒店id  不下发查询所有,
+		scaleId : 酒店房间类型id, 不下发则查询所有
+	}
+
+按月查询预定订单总量/订单总金额：
+
+	pc/order/book/month POST
+
+	{ 
+		sMonth : ‘2018-10’
+		//某一月订单预定情况，不下发则查询当月所有订单情况
+		hotelId : 酒店id  //不下发查询所有,
+		scaleId : 酒店房间类型id, //不下发则查询所有
+	}
+
+按天查询订单退款总量/退款总金额：pc/refund/day 
+输入：{ 
+			sDate : 日期,不下发则查询当天, 格式： ‘2018-10-09’
+			hotelId : 酒店id  不下发查询所有,
+			}
+按月查询订单退款总量/退款总金额：pc/refund/month 
+输入：{ 
+			sMonth : 月份,不下发则查询当月, 格式： ‘2018-10’
+			hotelId : 酒店id  不下发查询所有,
+			}			
+						
+			
+退款明细：
+查询： pc/refund/page POST 格式  json 输入：{startPage : 1,recordNum : 10}
+角色：
+
+添加角色：pc/role/add  POST 格式  json 输入：{roleName:''}  输出{ret:1/0,msg:'success',data:''}
+	 
+查询角色：pc/role     POST   输出{ret:1/0,msg:'success',data:''}
+修改角色：pc/role/add  POST 格式  json 输入：{id:id,roleName:''} 输出{ret:1/0,msg:'success',data:''}
+删除角色：pc/role/del/{id}  POST   输出{ret:1/0,msg:'success',data:''}
+
+
+员工列表：
+
+添加员工：pc/employee/add POST 格式  json 
+	输入：{
+					realName : realName,
+					province : province,
+					city : city,
+					county : county,
+					phone : phone,
+					location : location,
+					role : role,
+					userName : userName,
+					password: password
+			}
+查询员工：pc/employee/page  POST 格式  json 输入：{startPage : 1,recordNum : 10}
+
+删除员工：pc/employee/del/{id} POST 格式
+
+酒店：
+
+添加酒店：pc/hotel/add POST 格式  json 
+ 
+				 输入：{hotelName : hotelName,
+						province : province,
+						city : city,
+						county : county,
+						longitude : longitude,
+						latitude : latitude,
+						location : location,
+						phone : phone,
+						cleanType:cleanType,
+						employeeId:employeeId,
+						status:status,
+						hotelType:hotelType,物业类型 1.酒店 2.民宿 3.公寓
+						description:description
+					}
+修改酒店：pc/hotel/m POST 格式  json 
+ 
+				 输入：{
+						id:id,
+						hotelName : hotelName,
+						province : province,
+						city : city,
+						county : county,
+						longitude : longitude,
+						latitude : latitude,
+						location : location,
+						phone : phone,
+						cleanType:cleanType,
+						employeeId:employeeId,
+						status:status,
+						hotelType:hotelType,物业类型 1.酒店 2.民宿 3.公寓
+						description:description
+					}
+查询酒店：pc/hotel/page  POST 格式  json 输入：{startPage : 1,recordNum : 10}
+
+
+酒店类型：
+
+新增酒店类型：pc/scale/add POST 格式  json 
+	输入：{
+					scaleName : scaleName,
+					roomSize :roomSize,
+					description : description,
+					hotelId : hotelId,
+					bedNum :bedNum,
+					bedSize :bedSize,
+					isHour：isHour
+					isDay：isDay
+					isMonth：isMonth
+					isSublet：isSublet
+					serviceAmount :serviceAmount, isHour 为1
+					realHourAmount：realHourAmount isHour 为1
+					realAmount：realAmount isDay为1
+					realMonthAmount：realMonthAmount isMonth为1
+					deposit :deposit isMonth为1
+					roomPattern：roomPattern 房间格局 1.一室 2.二室 3.三室 4.四室 5.四室以上
+					payment：payment 付款方式 1.月付 2.季付 3半年付 4 年付
+			}
+修改酒店类型：pc/scale/m POST 格式  json 
+		输入：{
+				id:id,
+				scaleName : scaleName,
+				description : description,
+				hotelId : hotelId,
+				roomSize :roomSize,
+				bedNum :bedNum,
+				bedSize :bedSize,
+				isHour：isHour
+				isDay：isDay
+				isMonth：isMonth
+				isSublet：isSublet
+				serviceAmount :serviceAmount, isHour 为1
+				realHourAmount：realHourAmount isHour 为1
+				realAmount：realAmount isDay为1
+				realMonthAmount：realMonthAmount isMonth为1
+				deposit :deposit isMonth为1
+				roomPattern：roomPattern 房间格局 1.一室 2.二室 3.三室 4.四室 5.四室以上
+				payment：payment 付款方式 1.月付 2.季付 3半年付 4 年付
+		}
+查询酒店类型：pc/scale/{hotelId} POST 
+
+上传酒店类型图片：pc/scale/pic/{scaleId} POST 格式 file:imgFile
+
+删除图片：pc/scale/pic/del/{pictureId} POST 
+
+查询图片：pc/scale/pic/list/{scaleId} POST
+
+设置图片为首页展示：pc/scale/pic/logo/{pictureId} POST 
+
+房间类型设备新增：pc/room/dev/add POST 格式  json 
+					输入：{ 
+							devName : devName,
+							logo : logo,base64
+							scaleId : scaleId,
+							description:description,
+							sort:sort
+						}
+			删除：pc/room/dev/del/{devId} POST
+			
+
+
+
+房间：
+
+新增房间：pc/room/add POST 格式  json 
+      输入：{ 
+					roomNum : roomNum,
+					roomName : roomName,
+					roomScaleId : scaleId,
+					lockType：lockType,锁类型 1 哎呦有房 2果加
+					roomSale：roomSale,是否出售 0 不是 1 是
+					isGate:isGate   是否大门
+					parentId：parentId  大门id
+					mac : mac
+					register:register
+					}
+查询大门信息：pc/room/parent/{scaleId} POST
+
+查询：pc/room/{scaleId} POST
+
+删除：pc/room/del/{roomId} POST
+
+锁房：pc/room/lock/{roomId} POST
+
+房间修改：pc/room/m POST 格式  json 
+			输入：{ 
+					id:id,
+					roomNum : roomNum,
+					roomName : roomName,
+					roomScaleId : scaleId,
+					lockType：lockType,锁类型 1 哎呦有房 2果加
+					roomSale：roomSale,是否出售 0 不是 1 是
+					isGate:isGate   是否大门
+					parentId：parentId  大门id
+					mac : mac,
+					register:register
+					}
+
+房价：
+<!-- 新增：pc/scale/price/add POST 格式  json 
+      输入：{ 
+					scaleId : scaleId,
+					realAmount : realAmount,
+					realHourAmount:realHourAmount,
+					realMonthAmount:realMonthAmount,
+					priceDate : priceDate ('2018-08-28'),
+					} -->
+
+修改:pc/scale/price/m POST 格式  json 
+
+	 输入：{ 
+					scaleId : scaleId,
+					realAmount : realAmount,
+					realHourAmount:realHourAmount,
+					realMonthAmount:realMonthAmount,
+					priceDate : priceDate ('2018-08-28')					
+				}
+
+
+
+
+
+
+批量新增：  待定
+
+查询：pc/scale/price/month/{scaleId} 按月查询 year month
+	  pc/scale/price/day/{scaleId} 按日查询 day （'2018-08-28'）
+	  
+	  
+
+
+清洁订单： status 1 清洁中 2 已完成 不下发查询所有
+查询： pc/cleanOrder/page POST 格式  json 输入：{startPage : 1,recordNum : 10,status:1}
+
+修改：pc/cleanOrder/status/{cleanOrderId} POST 格式 输入{status:2}
+
+查询房态：查询给定日期房间总数和房间预定数 pc/room/book/{scaleId}
+	输入：{ 
+			bookDate : 日期, 格式： ‘2018-10-01’ （不下发为查询当天）
+			
+			}	
+			
+手动分房：pc/order/add  POST 格式  json
+	输入：{ 
+			hotelId: hotelId,
+			scaleId: scaleId,
+			startTime: startTime,
+			endTime: endTime,
+			totalPrice: totalPrice,
+			<!-- price: price, -->
+			<!-- serviceAmount: serviceAmount, -->
+			roomId: order.roomId,
+			<!-- roomSn: order.roomSn, -->
+			orderType: 1, 1.日租房 2.时租房 3.长租房
+			
+			}	
+
+
+
+
+
+
+
+
+
+
