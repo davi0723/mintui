@@ -98,7 +98,7 @@ export default {
         year: this.y[n],
         month: this.m[n]
       }
-      API.priceGetMonth(params).then(res => {
+      API.priceGetByMonth(params).then(res => {
         console.log('res:', res)
         // that.price = res.order.realAmount
         if (res && res.ret === 1) {
@@ -140,7 +140,7 @@ export default {
       this.popupVisible = false
       this[`datamap${this.m.indexOf(this.changedMonth)}`][this.changedDate] = this.changedPrice
       this[`datamap${this.m.indexOf(this.changedMonth)}`].push(1)
-      API.m({
+      API.pricePut({
         scaleId: this.id,
         realAmount: this.changedPrice,
         priceDate: `${this.changedYear}-${String(this.changedMonth).padStart(2, '00')}-${String(this.changedDate).padStart(2, '00')}`

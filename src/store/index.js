@@ -45,9 +45,9 @@ const store = new Vuex.Store({
     async loadHotels({ commit, dispatch, state }) {
       let params = {
         startPage: 1,
-        recordNum: 20,
+        recordNum: 300,
       }
-      let result = await API.hotelGet(params)
+      let result = await API.hotelGetList(params)
       commit('setHotel', { 'hotel': result.data })
       let id = cookie.getCookie('currentID')
       if (id) {
@@ -59,7 +59,7 @@ const store = new Vuex.Store({
     },
     loadState({ commit }, id) {
       // console.log('data', id)
-      API.scaleGet(id).then(result => {
+      API.scaleGetList(id).then(result => {
         if (result && result.ret === 1) {
           commit('setState', { statelist: result.data })
         }

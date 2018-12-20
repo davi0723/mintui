@@ -23,7 +23,7 @@ export default {
         title: '订单量',
         orderCount: 0,
         orderAmount: 0,
-        func: 'booked',
+        func: 'orderBooked',
         daily: true
       }, {
         label: '评论',
@@ -39,7 +39,7 @@ export default {
         title: '订单量',
         orderCount: 0,
         orderAmount: 0,
-        func: 'booked',
+        func: 'orderBookedMonth',
         daily: false
       }, {
         label: '用户浏览',
@@ -59,6 +59,7 @@ export default {
     this.overview.forEach((v, k) => {
       this.overviewDataLoad(v, k)
     })
+    // bus.$emit('currentIDChange')
     bus.$on('currentIDChange', () => {
       this.overview.forEach((v, k) => {
         this.overviewDataLoad(v, k)
@@ -78,8 +79,8 @@ export default {
       APICount[obj.func](params).then(result => {
         if (result && result.ret === 1) {
           console.log(obj.label, result)
-          this.overview[index].orderCount = result.data
-          this.overview[index].orderAmount = result.order
+          this.overview[index].orderCount = result.data || 0
+          this.overview[index].orderAmount = result.order || 0
         }
       }).catch(err => {
         console.log(err.message)

@@ -7,28 +7,34 @@ import * as API from './'
 export default {
 
   //查询获取预定book列表(通过page分页)
-  booked: params => {
-    // return API.POSTJSON('/pc/order/status/page', params)
-    return API.POST('/pc/order/book', params)
+  orderBookedMonth: params => {
+    /*{
+      sMonth : 某一月订单预定情况，不下发则查询当月所有订单情况, 格式： ‘2018-10’
+      hotelId : 酒店id  不下发查询所有,
+      scaleId : 酒店房间类型id, 不下发则查询所有
+    }*/
+    return API.GET('/pc/order/book/month', params)
+  },
+  orderBooked: params => {
+    /*{
+      sDate : 某一天订单预定情况，不下发则查询当前时间之后所有预定,
+      hotelId : 酒店id  不下发查询所有,
+      scaleId : 酒店房间类型id, 不下发则查询所有
+    }*/
+    return API.GET('/pc/order/book', params)
   },
 
   //查询获取一条信息
-  refund: params => {
-    // return API.GET(`/api/v1/hotels/${id}`)
-    return API.POSTJSON('/pc/refund/page', params)
-    // return API.POST(`/pc/scale/${id}`)
+  refundGet: params => {
+    return API.GET('/pc/refund/page', params)
   },
-  // 按天查询退款
-  refundd: params => {
-    // return API.GET(`/api/v1/hotels/${id}`)
+  // 按天查询订单退款总量/退款总金额
+  refundDay: params => {
     return API.POST('/pc/refund/day', params)
-    // return API.POST(`/pc/scale/${id}`)
   },
   // 按月查询退款
-  refundm: params => {
-    // return API.GET(`/api/v1/hotels/${id}`)
+  refundMonth: params => {
     return API.POST('/pc/refund/month', params)
-    // return API.POST(`/pc/scale/${id}`)
   },
   // 按月查询订单
   findmonth: params => {
@@ -39,8 +45,9 @@ export default {
   recordScan: params => {
     return API.POST(`/pc/scan/record/date`, params)
   },
+  // 查询评论数
   recordComment: params => {
-    return API.POST(`/pc/comment/date`, params)
+    return API.GET(`/pc/comment/date`, params)
   }
 
 }

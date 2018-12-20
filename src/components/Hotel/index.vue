@@ -28,7 +28,7 @@ export default {
     return {
       showSubmenu: 0,
       startPage: 1,
-      recordNum: 10,
+      recordNum: 20,
       loading: false,
       colorarr: ['#4a90e2', '#f9687a', '#ffb740']
     }

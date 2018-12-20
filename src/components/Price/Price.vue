@@ -56,7 +56,7 @@ export default {
   methods: {
     HotelStateListGet() {
       let hotelID = this.currentID || cookie.getCookie('currentID')
-      HotelState.scaleGet(hotelID).then(result => {
+      HotelState.scaleGetList(hotelID).then(result => {
         if (result && result.ret === 1) {
           this.HotelStateList = result.data
           console.log(result.data)

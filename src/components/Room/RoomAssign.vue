@@ -108,7 +108,7 @@ export default {
     },
     findById() {
       let hotelID = this.currentID || cookie.getCookie('currentID')
-      APIHotel.scaleGet(hotelID).then(result => {
+      APIHotel.scaleGetList(hotelID).then(result => {
         console.log(result)
         if (result && result.ret === 1) {
           this.hotelStyle = result.data
@@ -177,7 +177,7 @@ export default {
         roomSn: this.roomSn,
         serviceAmount: null
       }
-      APIOrder.orderAdd(params).then(result => {
+      APIOrder.orderPost(params).then(result => {
         console.log(result)
         if (result && result.ret === 1) {
           MessageBox({
